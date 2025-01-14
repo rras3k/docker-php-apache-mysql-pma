@@ -6,7 +6,6 @@ services:
       - '2950:80'
       - '446:443'
     environment:
-      # - APACHE_RUN_DIR=/var/www/html
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
       - APACHE_RUN_DIR=/var/www/html
       - APACHE_PID_FILE=/var/run/apache2/pid
