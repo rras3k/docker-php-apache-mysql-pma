@@ -1,0 +1,39 @@
+services:
+  app:
+    image: php-mysql-apache
+    container_name: artaxi-serv
+    ports:
+      - '2950:80'
+      - '446:443'
+    environment:
+      # - APACHE_RUN_DIR=/var/www/html
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+      - APACHE_RUN_DIR=/var/www/html
+      - APACHE_PID_FILE=/var/run/apache2/pid
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - APACHE_LOG_DIR=/var/log/apache2
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: artaxi-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: shroot
+      MYSQL_DATABASE: artaxi_prod
+      MYSQL_USER: seb
+      MYSQL_PASSWORD: seb
+    ports:
+      - 3317:3306
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: artaxi-phpmyadmin
+    ports:
+      - '8083:80'
+      - '450:443'
+    depends_on:
+      - db
